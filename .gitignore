@@ -25,6 +25,8 @@
 
 .idea
 
+test.json
+
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
