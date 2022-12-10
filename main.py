@@ -1,8 +1,3 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
 import json
 import requests
 from src.Parser import Parser
@@ -10,13 +5,11 @@ import time
 
 SERVER_IP = "aibg22.com:8081"
 
-
 def get_action(action):
     body_action = {
         "action": action
     }
     return body_action
-
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -36,7 +29,6 @@ if __name__ == '__main__':
         print(res.json())
         token = res.json()["token"]
 
-    #print("Nas token: ")
     #print(token)
 
     # Za testriranje:
