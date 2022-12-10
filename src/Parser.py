@@ -137,9 +137,9 @@ class Parser:
         if type_of_block == "ASTEROID":
             #  need cost times of turns to destroy asteroid
             ast_hp = block["entity"]["health"]
-            if ast_hp != 350:
-                print("DESILO SE SMANJENJE ASTEROIDA")
-                print(ast_hp)
+            #if ast_hp != 350:
+                # print("DESILO SE SMANJENJE ASTEROIDA")
+                # print(ast_hp)
             # up to debate
             cost = 10 * math.ceil(ast_hp / self.attack)
         elif type_of_block == "BLACKHOLE" or type_of_block == "WORMHOLE":
