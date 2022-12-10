@@ -45,11 +45,10 @@ if __name__ == '__main__':
     playerIdx = 1
 
     data = {
-        "mapName": "test1.txt",
+        "mapName": "test2.txt",
         "playerIdx": playerIdx,
         "time": 1
     }
-
 
 
     res = requests.post(url=url, headers=headers, data=json.dumps(data)).json()

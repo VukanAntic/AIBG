@@ -19,6 +19,7 @@ class Parser:
         self.target_times = []
         self.boss_tiles = []
         self.attack_fields = []
+        self.attack_fields_far = []
 
         for i in range(-4, 5):
             for j in range(-4 - min(i,0), 5 - max(i,0)):
@@ -68,6 +69,7 @@ class Parser:
 
         pl_ar_size = 4
         self.attack_fields = list()
+        self.attack_fields_far = list()
 
         for p in self.players:
             for i in range( -pl_ar_size,   pl_ar_size + 1):
@@ -75,6 +77,16 @@ class Parser:
                     #print(self.players)
                     self.attack_fields.append((p[0] + i, p[1] + j))
 
+        far_ar_size = 5
+
+        for p in self.players:
+            for i in range( -far_ar_size,   far_ar_size + 1):
+                for j in range( -far_ar_size - min(i, 0), far_ar_size + 1 - max(i, 0)):
+                    #print(self.players)
+                    if i in range(-pl_ar_size, pl_ar_size + 1)  and j in range(-pl_ar_size, pl_ar_size + 1):
+                        continue
+                    else:
+                        self.attack_fields_far.append((p[0] + i, p[1] + j))
 
         #print("Ovo je neki ispis za self.players")
         #print(self.players)
@@ -119,18 +131,29 @@ class Parser:
                     {"entity": block["entity"],"tileType": block["tileType"]}
         return block_dict
 
-    def get_block_cost(self,block):
+    def get_block_cost(self, block, pos):
         cost = 0
         type_of_block = block["entity"]["type"]
-        if type_of_block == "EMPTY":
-            cost = 1
-        elif type_of_block == "ASTEROID":
+        if type_of_block == "ASTEROID":
             #  need cost times of turns to destroy asteroid
             ast_hp = block["entity"]["health"]
-            cost = math.ceil(ast_hp / self.attack)
+            if ast_hp != 350:
+                print("DESILO SE SMANJENJE ASTEROIDA")
+                print(ast_hp)
+            # up to debate
+            cost = 10 * math.ceil(ast_hp / self.attack)
         elif type_of_block == "BLACKHOLE" or type_of_block == "WORMHOLE":
             # need 3 turns to get out of the blackhole
             cost = INF
+        else:
+            cost = 10
+        if pos in self.players:
+            # print((i + k, j + l))
+            cost += INF
+        elif pos in self.attack_fields_far:
+            cost += 5
+        elif pos in self.attack_fields:
+            cost += 20
         #print(cost)
         return cost
 
@@ -148,13 +171,7 @@ class Parser:
                             #if i + k == -7 and j + l == -2:
                                # print("Ovo je unutar if-a")
                                # print(self.players)
-                            if (i + k, j + l) in self.players:
-                                #print((i + k, j + l))
-                                cost = INF
-                            elif (i + k, j + l) in self.attack_fields:
-                                cost = 5
-                            else:
-                                cost = self.get_block_cost(block_dict[(i + k, j + l)])
+                            cost = self.get_block_cost(block_dict[(i + k, j + l)],(i + k, j + l))
                             graph_matrix[(i, j)].append(((i+k,j+l),cost))
                             #print(cost)
 
