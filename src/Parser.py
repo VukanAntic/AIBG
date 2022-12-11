@@ -59,7 +59,8 @@ class Parser:
         all_players = {}
 
         for player in state["scoreBoard"]["players"]:
-            all_players[player["playerIdx"]] = (player["q"], player["r"])
+            if player:
+                all_players[player["playerIdx"]] = (player["q"], player["r"])
 
 
         our_player = all_players[self.player_id]

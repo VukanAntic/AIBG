@@ -3,7 +3,7 @@ import requests
 from src.Parser import Parser
 import time
 
-SERVER_IP = "aibg22.com:8081"
+SERVER_IP = "aibg2022.com:8081"
 
 def get_action(action):
     body_action = {
@@ -14,7 +14,7 @@ def get_action(action):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     with open('cred.json', 'r') as file:
-        bot_number = input("Bot number: ")
+        bot_number = 1 #input("Bot number: ")
         content = json.loads(file.read())
         content["username"] = content["username"] + str(bot_number)
         #print(content["username"])
